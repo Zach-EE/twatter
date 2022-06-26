@@ -5,6 +5,11 @@
         <div class="col">
             <div class="col">
                 <h4>Signup</h4>
+                <form method='POST' action='.'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
