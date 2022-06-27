@@ -7,9 +7,9 @@ from apps.base.views import homepage, signup
 urlpatterns = [
     
     path('', homepage, name= 'homepage'),
-    path('login/', views.LoginView.as_view(), name='login'),
+    path('login/', views.LoginView.as_view(template_name='base/login'), name='login'),
     path('signup/', signup, name='signup'),
-    path('logout/', views.LogoutView.as_view(template_name='base/login.html'), name='logout'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
     
     path('admin/', admin.site.urls),
 ]
