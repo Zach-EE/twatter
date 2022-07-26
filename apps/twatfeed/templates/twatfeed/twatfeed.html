@@ -1,16 +1,47 @@
-{% extends 'base/base.html' %}
-
-{% block content %}
-    <div class="containter">
-        <div class="col">
-            <div class="col">
-                <h4>TwatFeed</h4>
-                <form method='post' action='.'>
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+{% extends 'base/base.html' %} {% block content %}
+<div class="containter" id="twatfeed">
+  <div class="col">
+    <div class="col-sm-12">
+      <div class="wrapper-form">
+        <form v-on:submit.prevent="submitTwat()">
+          <div class="field">
+            <textarea
+              class="textarea"
+              v-model="body"
+              placeholder="The World is Twatting, Join Them..."
+            ></textarea>
+          </div>
+          <div class="field">
+            <button type="submit" class="btn btn-primary">Twat</button>
+          </div>
+        </form>
+      </div>
+      <div class="wrapper-twats">
+        <div class="twat" v-for="twat in twats">
+          <p>[[ twat.body ]]</p>
         </div>
+      </div>
     </div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block script%}
+<script>
+new Vue({
+    el: '#twatfeed',
+    delimiters: ['[[',']]'],
+    data () {
+        return {
+            twats : [{ body: 'Foo' }, { body: 'Bar' }],
+        }
+    },
+    methods: {
+        submitTwat() {
+            console.log('twatSubmitted')
+        }
+    },
+
+})
+</script>
 {% endblock %}

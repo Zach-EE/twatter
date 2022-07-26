@@ -8,7 +8,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Twatter</title>
@@ -30,12 +29,18 @@
       <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if request.user.is_authenticated %}
+            <a class="button nav-link" href="{% url 'twatfeed' %}">TwatFeed</a>
+        {% endif %}
         <div class="navbar-item">
           {% if request.user.is_authenticated %}
             <a class="button nav-link" href="{% url 'logout' %}">Logout</a>
           {% else %}
+          <div class="row">
             <a class="col nav-link" href="{% url 'signup' %}">SignUp</a>
             <a class="col nav-link" href="{% url 'login' %}">LogIn</a>
+          </div>
+           
           {% endif %}
         </div>
         <form class="form-inline my-2 my-lg-0">
@@ -45,16 +50,16 @@
       </div>
   </nav>
   
-  <div class="container">
+  <section class="container">
       {% block content %}
       nothing here
       {% endblock %} 
-  </div>
+  </section>
 
-  <footer class="page-footer font-small blue">
-  </footer>
-
-  <script src=''></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    {% block script %}
+    nada ziltch zero
+    {% endblock %}
     
 </body>
 
