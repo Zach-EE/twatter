@@ -4,7 +4,7 @@
     <div class="col-sm-12">
       <div class="wrapper-form">
         <form v-on:submit.prevent="submitTwat()">
-          <div class="field">
+          <div class="field card">
             <textarea
               class="textarea"
               v-model="body"
@@ -16,10 +16,13 @@
           </div>
         </form>
       </div>
-      <div class="wrapper-twats">
-        <div class="twat" v-for="twat in twats">
+      <div class="mt-2">
+        <div class="card border border-primary mt-1" v-for="twat in twats">
+          <h4 class="">[[ twat.twatusr ]]</h4>
           <p>[[ twat.body ]]</p>
+          <p class="">[[ twat.created_at ]]</p>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -33,12 +36,43 @@ new Vue({
     delimiters: ['[[',']]'],
     data () {
         return {
-            twats : [{ body: 'Foo' }, { body: 'Bar' }],
+            twats : [],
+            body: '',
+            twatusr: '{{ request.user.username }}',
+            created_at: 'Now'
         }
     },
     methods: {
         submitTwat() {
             console.log('twatSubmitted')
+            if (this.body.length > 0) {
+              let twat = {
+                'body': this.body,
+                'twatusr': this.twatusr,
+                'created_at': this.created_at,
+              };
+
+              this.twats.unshift(twat);
+
+              // save to db
+
+              fetch('/api/add_twat/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X=CRSFToken': '{{ csrf_token }}'
+                },
+                credintials: 'same-origin',
+                body: JSON.stringify(twat)
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              }) 
+            }
+            this.body = '';
         }
     },
 
