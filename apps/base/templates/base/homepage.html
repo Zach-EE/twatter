@@ -6,6 +6,19 @@
             <div class="col">
                 <h4>Homepage</h4>
             </div>
+            {% for twat in twats %}
+            <div class="container">
+                <div class="twat-wrapper mt-2">
+                    {% for twat in twats  %}
+                    <div class="card border border-primary mt-1">
+                        <h4 class="">{{ twat.created_by }}</h4>
+                        <p>{{ twat.body }}</p>
+                        <p class="">{{ twat.created_at }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 

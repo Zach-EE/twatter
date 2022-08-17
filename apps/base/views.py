@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
+from apps.twatfeed.models import Twat
+
 def homepage(request):
-    return render(request, 'base/homepage.html')
+    twats = Twat.objects.all()
+    return render(request, 'base/homepage.html',{'twats': twats})
 
 
 def signup(request):
