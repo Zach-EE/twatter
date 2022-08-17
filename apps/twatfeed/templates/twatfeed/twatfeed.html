@@ -1,14 +1,15 @@
-{% extends 'base/base.html' %} {% block content %}
+{% extends 'base/base.html' %} 
+{% block content %}
 <div class="containter" id="twatfeed">
   <div class="col">
     <div class="col-sm-12">
-      <div class="wrapper-form">
+      <div class="form-wrapper">
         <form v-on:submit.prevent="submitTwat()">
           <div class="field card">
             <textarea
               class="textarea"
               v-model="body"
-              placeholder="The World is Twatting, Join Them..."
+              placeholder="The World is Twatting, Join Them {{ user.username }}..."
             ></textarea>
           </div>
           <div class="field">
@@ -16,15 +17,25 @@
           </div>
         </form>
       </div>
-      <div class="mt-2">
+      <div class="twat-wrapper mt-2">
         <div class="card border border-primary mt-1" v-for="twat in twats">
-          <h4 class="">[[ twat.twatusr ]]</h4>
+          <h4 class="">[[ twat.twatuser ]]</h4>
           <p>[[ twat.body ]]</p>
           <p class="">[[ twat.created_at ]]</p>
         </div>
       </div>
-      </div>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="twat-wrapper mt-2">
+    {% for twat in twats  %}
+      <div class="card border border-primary mt-1" v-for="twat in twats">
+        <h4 class="">{{ twat.created_by }}</h4>
+        <p>{{ twat.body }}</p>
+        <p class="">{{ twat.created_at }}</p>
+      </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %} 
@@ -38,7 +49,7 @@ new Vue({
         return {
             twats : [],
             body: '',
-            twatusr: '{{ request.user.username }}',
+            twatuser: '{{ request.user.username }}',
             created_at: 'Now'
         }
     },
@@ -48,10 +59,10 @@ new Vue({
             if (this.body.length > 0) {
               let twat = {
                 'body': this.body,
-                'twatusr': this.twatusr,
+                'twatuser': this.twatuser,
                 'created_at': this.created_at,
               };
-
+              //show newest twat first
               this.twats.unshift(twat);
 
               // save to db
@@ -60,7 +71,7 @@ new Vue({
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'X=CRSFToken': '{{ csrf_token }}'
+                  'X-CSRFToken': '{{ csrf_token }}'
                 },
                 credintials: 'same-origin',
                 body: JSON.stringify(twat)
@@ -75,7 +86,6 @@ new Vue({
             this.body = '';
         }
     },
-
 })
 </script>
 {% endblock %}
