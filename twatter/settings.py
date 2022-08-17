@@ -10,6 +10,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'twatfeed'
 LOGOUT_REDIRECT_URL = 'homepage'
 
 # Application definition
@@ -22,9 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.base',
-    'apps.twatterprofile'
-    'apps.twatfeed'
+    'apps.base.apps.BaseConfig',
+    'apps.twatterprofile.apps.TwatterProfileConfig',
+    'apps.twatfeed.apps.TwatFeedConfig'
 ]
 
 MIDDLEWARE = [
@@ -104,6 +105,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

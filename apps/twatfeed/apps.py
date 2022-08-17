@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TwatfeedConfig(AppConfig):
+class TwatFeedConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'twatfeed'
+    name = 'apps.twatfeed'

@@ -1,15 +1,27 @@
+<!DOCTYPE html>
 {% load static %}
-<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
     <title>Twatter</title>
     <style type="text/css">
@@ -21,39 +33,55 @@
         font-size: 25px;
       }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
-        <a class="navbar-brand" href="/">Twatter</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/">Twatter</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-item">
-            {% if request.user.is_authenticated %}
-              <a class="button nav-link" href="{% url 'logout' %}">Logout</a>
-            {% else %}
-              <a class="col nav-link" href="{% url 'signup' %}">SignUp</a>
-              <a class="col nav-link" href="{% url 'login' %}">LogIn</a>
-            {% endif %}
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if request.user.is_authenticated %}
+        <a class="button nav-link" href="{% url 'twatfeed' %}">TwatFeed</a>
+        {% endif %}
+        <div class="navbar-item">
+          {% if request.user.is_authenticated %}
+          <a class="button nav-link" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+          <div class="row">
+            <a class="col nav-link" href="{% url 'signup' %}">SignUp</a>
+            <a class="col nav-link" href="{% url 'login' %}">LogIn</a>
           </div>
-          <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+
+          {% endif %}
         </div>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
     </nav>
-    
-    <div class="container">
-        {% block content %}
-        nothing here
-        {% endblock %} 
-    </div>
 
-    
-</body>
-<footer class="page-footer font-small blue">
-</footer>
+    <section class="card">
+      {% block content %} nothing here {% endblock %}
+    </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    {% block script %} {% endblock %}
+  </body>
 </html>
